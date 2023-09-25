@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
             $table->string('name',50);
+            $table->integer('period');
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
             $table->softDeletes();
