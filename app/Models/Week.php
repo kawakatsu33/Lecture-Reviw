@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subject extends Model
+class Week extends Model
 {
     use HasFactory;
     
@@ -18,13 +18,14 @@ class Subject extends Model
         return $this->belongsTo(User::class);
     }
     
-    public function lectures()
+    public function subjects()
     {
-        return $this->hasMany(Lecture::class);
+        return $this->belongsToMany(Subject::class, 'subject_week');
     }
     
-    public function weeks()
+    public function lectures()
     {
-        return $this->belongsToMany(Week::class, 'subject_week');
+        return $this->belongsToMany(Lecture::class, 'lecture_week');
     }
+    
 }
