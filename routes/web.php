@@ -14,8 +14,6 @@ use App\Http\Controllers\SubjectController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [SubjectController::class,'index']);
 
-Route::get('/subject',[SubjectController::class, 'index']);
+//Route::get('/subject',[SubjectController::class, 'index']);
