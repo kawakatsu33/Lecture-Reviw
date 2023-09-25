@@ -17,6 +17,23 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+     
+     public function subjects()
+     {
+         return $this->hasMany(Subject::class);
+     }
+     
+     public function lectures()
+     {
+         return $this->hasmMany(Lecture::class);
+     }
+     
+     public function weeks()
+     {
+         return $this->hasMany(Week::class);
+     }
+     
+     
     protected $fillable = [
         'name',
         'email',
