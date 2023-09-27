@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Subject;
+use App\Models\Week;
 
 class SubjectController extends Controller
 {
-    public function index(Subject $subject)
+    public function index()
     {
-        return $subject->get();
+        $weeks = Week::with('subjects')->get();
+        return view('lectures.index', ['weeks' => $weeks]);
     }
 }

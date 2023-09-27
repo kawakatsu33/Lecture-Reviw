@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('body');
             $table->integer('period');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->foreignId('subject_id')->constrained();
             $table->timestamps();
             $table->softDeletes();

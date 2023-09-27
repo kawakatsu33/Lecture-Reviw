@@ -12,16 +12,17 @@
         
     </head>
     <body>
-        <h1>講義復習サイト</h1>
-    
-        @foreach ($weeks as $week)
-            <section>
-                <h2>{{ $week->name }}</h2>
-                @foreach ($week->subjects as $subject)
-                    <p>{{ $subject->period }}限. {{ $subject->name }}</p>
-                @endforeach
-            </section>
-        @endforeach
-    
+        <headere>
+            <h1>{{ subjects->name }}</h1>
+        </headere>  
+        
+            <h2>{{ $lectures->name }}</h2>
+            
+            @foreach($lectures->lecture)
+                <section>
+                    <h3>{{ $lecture->times }}</h3>
+                    <p>{{ $lecture->body }}</p>
+                </section>
+       
     </body>
 </html>
