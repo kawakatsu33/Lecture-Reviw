@@ -12,7 +12,7 @@
         
     </head>
     <body>
-        <h1>講義復習サイト</h1>
+        <h1>講義復習サイト!</h1>
     
         @foreach ($weeks as $week)
             <section>

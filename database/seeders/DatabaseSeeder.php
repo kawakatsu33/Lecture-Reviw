@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SubjectsTableSeeder::class,
             WeeksTableSeeder::class,
-            SubjectWeekTableSeeder::class]);
+            SubjectWeekTableSeeder::class,
+            LecturesTableSeeder::class,
+            LectureWeekTableSeeder::class]);
     }
 }

@@ -14,7 +14,6 @@ class SubjectsTableSeeder extends Seeder
      */
     public function run(): void
     {
-   
         DB::table('subjects')->insert([
             //月曜日
             ['name' => "コンピュータシステムの基礎",'period' => 1],
