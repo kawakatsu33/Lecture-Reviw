@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+//use App\Http\Requests\
 use App\Models\Week;
 use App\Models\Subject; 
 
@@ -16,7 +17,12 @@ class SubjectController extends Controller
     
     public function subject_detail($subject_id)
     {   
-        $subject = Subject::with('lectures')->find($subject_id);
-        return view('lectures.subject_detail',compact('subject') );
+        $subject = Subject::with('lectures')->findOrFail($subject_id);
+        return view('lectures.subject_detail',compact('subject'));
+    }
+    
+    public function lecture_register()
+    {
+        return view('lectures.lecture_register');
     }
 }
