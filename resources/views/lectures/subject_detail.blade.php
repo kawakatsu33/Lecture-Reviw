@@ -12,17 +12,21 @@
         
     </head>
     <body>
-        <headere>
-            <h1>{{ subjects->name }}</h1>
-        </headere>  
+        <header>
+            <h1>{{ $subject->name }}</h1>
+        </header>  
         
-            <h2>{{ $lectures->name }}</h2>
             
-            @foreach($lectures->lecture)
+            
+            @foreach($subject->lectures as $lecture)
                 <section>
-                    <h3>{{ $lecture->times }}</h3>
+                    <h2>{{ $lecture->times }}回目. {{ $lecture->name }}</h2>
                     <p>{{ $lecture->body }}</p>
                 </section>
-       
+            @endforeach
+            
+        <div>
+        <a href="{{ route('lectures.index') }}">トップに戻る</a>
+        </div>
     </body>
 </html>
