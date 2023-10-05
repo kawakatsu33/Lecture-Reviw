@@ -17,7 +17,7 @@
         </header>  
         
             
-            
+        <a href="{{ route('lecture_register') }}">講義追加</a>    
             @foreach($subject->lectures as $lecture)
                 <section>
                     <h2>{{ $lecture->times }}回目. {{ $lecture->name }}</h2>
