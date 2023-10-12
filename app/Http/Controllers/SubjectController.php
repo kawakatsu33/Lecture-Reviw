@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 //use App\Http\Requests\
 use App\Models\Week;
 use App\Models\Subject; 
+use App\Models\Lecture;
 
 class SubjectController extends Controller
 {
@@ -21,8 +22,7 @@ class SubjectController extends Controller
         return view('lectures.subject_detail',compact('subject'));
     }
     
-    public function lecture_register()
-    {
-        return view('lectures.lecture_register');
-    }
+    
+    
+    
 }

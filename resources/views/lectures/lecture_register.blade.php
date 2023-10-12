@@ -15,11 +15,19 @@
         
            <h1>講義登録</h1> 
            
-           <form action="/lectures/subject_detail" method="POST">
+           <form action="/lectures/store" method="POST">
                @csrf
-               <div class="title">
+               
+               <input type="hidden" name="subject_id" value="{{ $subject }}">
+
+               
+               <div class="name">
                     <h2>講義名</h2>
-                    <input type="text" name='lecture[title]' placeholder="講義名" value="{{ old('lecture.title') }}">
+                    <input type="text" name='lecture[name]' placeholder="講義名（任意）" value="{{ old('lecture.name') }}">
+                </div>
+                
+                <div class='times'>
+                    <input type="number" name='lecture[times]' placeholder="n" value="{{ old('lecture.times') }}.回目">
                 </div>
                 
                 <div class='body'>

@@ -12,7 +12,7 @@ class Lecture extends Model
     protected $fillable = [
         'name',
         'body',
-        'period',
+        'times',
         'user_id',
         'subject_id'];
     
@@ -28,6 +28,6 @@ class Lecture extends Model
     
     public function weeks()
     {
-        return $this->belonsToMany(Week::class, 'lecture_week');
+        return $this->belongsToMany(Week::class, 'lecture_week');
     }
 }
