@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('lectures', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable()->constrained();;
+            $table->string('name')->nullable();
             $table->text('body');
      
             $table->integer('times');
             $table->foreignId('user_id')->nullable()->constrained();
 
-            $table->foreignId('subject_id')->constrained();
+            $table->foreignId('subject_id')->nullable()->constrained();
             $table->timestamps();
             $table->softDeletes();
         });
