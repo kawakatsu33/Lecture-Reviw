@@ -17,11 +17,15 @@
         </header>  
         
             
-        <a href="{{ route('lecture_register',['subject_id'=>$subject->id]) }}">講義追加</a>    
+        <a href="{{ route('lecture_register',['subject_id'=>$subject->id]) }}">講義追加</a>
+        
+
+
             @foreach($subject->lectures as $lecture)
                 <section>
                     <h2>{{ $lecture->times }}回目. {{ $lecture->name }}</h2>
                     <p>{{ $lecture->body }}</p>
+                    <a href="{{ route('lecture_edit', $lecture->id) }}">編集</a>
                 </section>
             @endforeach
             
