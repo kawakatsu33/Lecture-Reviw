@@ -28,4 +28,19 @@ class LectureController extends Controller
     {
         return view('lectures.lecture_register',['subject'=>$subject_id]);
     }
+    
+    public function edit(Lecture $lecture)
+    {
+        return view('lectures.lecture_edit')->with(['lecture' => $lecture]);
+    }
+    
+    public function update(Request $request, Lecture $lecture)
+    {
+        $input_lecture = $request['lecture'];
+        $lecture->fill($input_lecture)->save();
+        
+        $subjectId = $lecture->subject_id;
+    
+       return redirect()->route('subject_detail',['subject'=>$subjectId]);
+    }
 }

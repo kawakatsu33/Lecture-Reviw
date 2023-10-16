@@ -9,4 +9,7 @@ Route::get('/', [SubjectController::class,'index'])->name('lectures.index');
 
 Route::get('/lectures/lecture_register/{subject_id}', [LectureController::class, 'lecture_register'])->name('lecture_register');
 Route::post('/lectures/store', [LectureController::class, 'lecture_store'])->name('lecture_store');
+Route::get('/lectures/{lecture}/lecture_edit', [LectureController::class,'edit'])->name('lecture_edit');
 Route::get('/lectures/{subject}', [SubjectController::class, 'subject_detail'])->name('subject_detail');
+
+Route::put('/lectures/{lecture}', [LectureController::class, 'update'])->name('update');
