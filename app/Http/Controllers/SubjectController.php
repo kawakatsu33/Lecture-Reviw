@@ -22,7 +22,29 @@ class SubjectController extends Controller
         return view('lectures.subject_detail',compact('subject'));
     }
     
+    public function subject_register(){
+        $weeks = Week::all();
+        return view('lectures.subject_register',compact('weeks'));
+    }
     
+    /*public function subject_store(Request $request){
+        $input = $request['subject'];
+        $subject = Subject::create($input);
+        $week->subjects()->attach($subject->id);
+        
+        return redirect()->route('lectures.index');
+    } */
+    public function subject_store(Request $request){
+        $input = $request['subject'];
+        $week_id = $request['week_id'];
     
+        $subject = Subject::create($input);
     
+        $week = Week::find($week_id);
+        $week->subjects()->attach($subject->id);
+        
+        return redirect()->route('lectures.index');
+    }
+
 }
+    
