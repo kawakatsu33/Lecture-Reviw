@@ -43,4 +43,11 @@ class LectureController extends Controller
     
        return redirect()->route('subject_detail',['subject'=>$subjectId]);
     }
+    
+    public function delete(Lecture $lecture)
+    {
+        $lecture->delete();
+        $subjectId = $lecture->subject_id;
+        return redirect()->route('subject_detail',['subject'=>$subjectId]);
+    }
 }
