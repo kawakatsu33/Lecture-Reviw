@@ -26,11 +26,26 @@
                     <h2>{{ $lecture->times }}回目. {{ $lecture->name }}</h2>
                     <p>{{ $lecture->body }}</p>
                     <a href="{{ route('lecture_edit', $lecture->id) }}">編集</a>
+                    <form action="/lectures/{{ $lecture->id }}" id="form_{{ $lecture->id }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" onclick="deleteLecture({{ $lecture->id }})">削除</button> 
+                    </form>
                 </section>
             @endforeach
             
         <div>
         <a href="{{ route('lectures.index') }}">トップに戻る</a>
         </div>
+        
+        <script>
+            function deleteLecture(id) {
+                'use strict'
+        
+                if (confirm('この講義消えていいの？')) {
+                    document.getElementById(`form_${id}`).submit();
+                }
+            }
+        </script>
     </body>
 </html>
