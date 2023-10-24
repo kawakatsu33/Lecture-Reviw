@@ -13,6 +13,7 @@ class Subject extends Model
     
     protected $fillable = [
         'name',
+        'period',
         'user_id',
         'body'];
     

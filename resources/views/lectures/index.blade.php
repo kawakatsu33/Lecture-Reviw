@@ -13,11 +13,13 @@
     </head>
     <body>
         <h1>講義復習サイト</h1>
-    
+   
+    <a href="{{ route('subject_register') }}">科目追加</a>
         @foreach ($weeks as $week)
             <section>
                 <h2>{{ $week->name }}</h2>
                 @foreach ($week->subjects as $subject)
+                    
                     <p>{{ $subject->period }}限</p>
                     <a href="/lectures/{{ $subject->id }}"><h2 class='title'>{{ $subject->name }}</h2></a>
                 @endforeach
