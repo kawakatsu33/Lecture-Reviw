@@ -45,6 +45,11 @@ class SubjectController extends Controller
         
         return redirect()->route('lectures.index');
     }
+    
+    public function subject_delete(Subject $subject){
+            $subject->delete();
+            return redirect()->route('lectures.index');
+    }
 
 }
     

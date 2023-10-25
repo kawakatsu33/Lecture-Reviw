@@ -15,6 +15,7 @@
         <h1>講義復習サイト</h1>
    
     <a href="{{ route('subject_register') }}">科目追加</a>
+                    
         @foreach ($weeks as $week)
             <section>
                 <h2>{{ $week->name }}</h2>
@@ -22,9 +23,26 @@
                     
                     <p>{{ $subject->period }}限</p>
                     <a href="/lectures/{{ $subject->id }}"><h2 class='title'>{{ $subject->name }}</h2></a>
+                    
+                    <form action="/subject_delete/{{ $subject->id }}" id="form_{{ $subject->id }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" onclick="deleteSubject({{ $subject->id }})">科目削除</button> 
+                    </form>
                 @endforeach
             </section>
         @endforeach
+        
+    
+    <script>
+            function deleteSubject(id) {
+                'use strict'
+        
+                if (confirm('この科目を削除してもよろしい？')) {
+                    document.getElementById(`form_${id}`).submit();
+                }
+            }
+    </script>
     
     </body>
 </html>
