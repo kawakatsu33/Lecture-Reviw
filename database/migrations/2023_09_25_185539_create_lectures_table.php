@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->text('body');
-     
+            $table->string('pdf_path')->nullable();     
             $table->integer('times');
             $table->foreignId('user_id')->nullable()->constrained();
 
