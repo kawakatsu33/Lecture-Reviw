@@ -13,7 +13,10 @@ class SubjectController extends Controller
     public function index()
     {
         $weeks = Week::with('subjects')->get();
-        return view('lectures.index', ['weeks' => $weeks]);
+        $dayNames = ["Monday" => "月曜", "Tuesday" => "火曜", "Wednesday" => "水曜", "Thursday" => "木曜", "Friday" => "金曜"];
+        $todayEnglish = date('l'); 
+        $todayJapanese = $dayNames[$todayEnglish]?? null;
+        return view('lectures.index', ['weeks' => $weeks, 'today' => $todayJapanese]);
     }
     
     public function subject_detail($subject_id)
@@ -27,13 +30,6 @@ class SubjectController extends Controller
         return view('lectures.subject_register',compact('weeks'));
     }
     
-    /*public function subject_store(Request $request){
-        $input = $request['subject'];
-        $subject = Subject::create($input);
-        $week->subjects()->attach($subject->id);
-        
-        return redirect()->route('lectures.index');
-    } */
     public function subject_store(Request $request){
         $input = $request['subject'];
         $week_id = $request['week_id'];
@@ -43,13 +39,14 @@ class SubjectController extends Controller
         $week = Week::find($week_id);
         $week->subjects()->attach($subject->id);
         
-        return redirect()->route('lectures.index');
+        return redirect()->route('index');
     }
     
     public function subject_delete(Subject $subject){
             $subject->delete();
-            return redirect()->route('lectures.index');
+            return redirect()->route('index');
     }
+    
 
 }
     

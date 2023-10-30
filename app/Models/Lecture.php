@@ -16,7 +16,8 @@ class Lecture extends Model
         'body',
         'times',
         'user_id',
-        'subject_id'];
+        'subject_id',
+        'pdf_path'];
     
     public function user()
     {

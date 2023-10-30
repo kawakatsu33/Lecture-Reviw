@@ -10,9 +10,15 @@ class LectureController extends Controller
 {
     public function lecture_store(Request $request, Lecture $lecture)
     {
+        
         $input = $request['lecture'];
         
-  
+        
+        if ($request->hasFile('pdf')){
+            $path = $request->file('pdf')->store('pdfs', 'public');
+            $input['pdf_path'] = $path;
+
+        }
         
         $subjectId = $request->input('subject_id');
         

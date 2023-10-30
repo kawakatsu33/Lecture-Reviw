@@ -1,19 +1,66 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <title>lecture review</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
-        <!-- Styles -->
+<x-app-layout>
+    <x-slot name="header">
+        <h1>講義編集</h1> 
+    </x-slot>
+    <x-slot name="content">
+        <style>
         
-    </head>
-    <body>
+            h1 {
+                font-size: 2.5em;
+                text-align: center;
+                margin-bottom: 50px;
+            }
+            
+            h2, h3, h4 {
+                margin-bottom: 10px;
+                font-size: 20px;
+            }
+    
+    
+            .register submit:hover {
+                background-color: #e8e8e8;
+            }
+            
+            .name input, .times input {
+               
+                
+                width: 100%;       /* フィールドを親要素の幅いっぱいに広げる */
+                padding: 10px;     /* フィールドの内部にパディングを追加する */
+                font-size: 1em;    /* フォントサイズを調整する */
+                margin-bottom: 10px; /* 各フィールドの間にマージンを追加する */
+                height: auto;  /* 必要に応じて高さを自動調整 */
+                border: 1px solid #ccc;  /* フィールドの境界線をわかりやすくする */
+            }
+            
+            .body textarea {
+                 width: 100%;       /* フィールドを親要素の幅いっぱいに広げる */
+                padding: 10px;     /* フィールドの内部にパディングを追加する */
+                font-size: 1em;    /* フォントサイズを調整する */
+                margin-bottom: 10px; /* 各フィールドの間にマージンを追加する */
+                height: 150px;  /* 必要に応じて高さを自動調整 */
+                border: 1px solid #ccc;  /* フィールドの境界線をわかりやすくする */
+            }
+            
+            .register input {
+                display: block;
+                width: 40%;  /* フォームの最大幅 */
+                margin: 0 auto; 
+                margin-top: 75px;
+                padding: 10px;
+                font-size: 1em;
+            }
+            
+            .back{
+                text-align: right;
+                margin-right: 150px;
+                margin-top: 60px;
+                
+            }
+        </style>
         
-           <h1>講義編集</h1> 
+    
+        
+           
            
            <form action="/lectures/{{ $lecture->id }}" method="POST">
                @csrf
@@ -27,19 +74,22 @@
                 </div>
                 
                 <div class='times'>
-                    <input type="number" name='lecture[times]'  value="{{ $lecture->times }}">.回
+                    <h3>講義回</h3>
+                    <input type="number" name='lecture[times]'  value="{{ $lecture->times }}">
                 </div>
                 
                 <div class='body'>
-                    <h3>Note</h3>
+                    <h4>Note</h4>
                     <textarea name="lecture[body]">{{ $lecture->body }}</textarea>
                     
                 </div>
                 
-                <input type="submit" value="編集実行">
+                <div class="register">
+                    <input type="submit" value="編集実行">
+                </div>
             </form>
-        <div>
-        <a href="{{ route('lectures.index') }}">トップに戻る</a>
-        </div>
-    </body>
-</html>
+            <div class="back">
+                <a href="{{ route('index') }}">トップに戻る</a>
+            </div>
+    </x-slot>
+</x-app-layout>
