@@ -4,9 +4,7 @@
     </x-slot>
     
     <x-slot name="content">
-    <div class="add">
-        <a href="{{ route('lecture_register', ['subject_id' => $subject->id]) }}"style="background-color: #FFF0F5; color: #000000; padding: 10px 15px; border-radius: 4px; text-decoration: none; border: 1px solid black;">講義追加</a>
-    </div>
+   
     <div class="user">
         @if(Auth::check())
             ログインユーザー: {{ Auth::user()->name }}
@@ -16,14 +14,10 @@
 
     </div>
     
-    @foreach($subject->lectures as $lecture)
+    
         <section>
             
-            <h2>
-                <a href="{{ route('lecture_show', $lecture->id) }}">
-                    {{ $lecture->times }}回目. {{ $lecture->name }}
-                </a>
-            </h2>
+            <h2>{{ $lecture->times }}回目. {{ $lecture->name }}</h2>
             <div class="understanding">
                 @if($lecture->understanding)
                   <p>理解度: {{ $lecture->understanding->level }}</p>
@@ -46,6 +40,7 @@
         <div class="container">
             @if($lecture->pdf_path)
                 <div class="pdf-display">
+                   
                     <iframe src="{{ secure_asset('storage/' . $lecture->pdf_path) }}" width="600" height="900" frameborder="0" style="border:none;"></iframe>
                 </div>
             @endif
@@ -64,7 +59,7 @@
                 </form>
             </div>
         </section>
-    @endforeach
+    
 
     <div>
         <a href="{{ route('index') }}">トップに戻る</a>
@@ -90,12 +85,7 @@
             border-bottom: none;
         }
 
-        .add {
-            font-size: 1.5em;
-            text-align: center;
-            margin: 50px 0px 20px 600px;
-            
-        }
+       
 
         .delete {
             text-align: right;
