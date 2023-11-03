@@ -77,6 +77,18 @@
                     <input type="number" name='lecture[times]' placeholder="n" value="{{ old('lecture.times') }}.回目">
                 </div>
                 
+                <div class='understanding'>
+                <h3>理解度</h3>
+                    <select name='level'>
+                        <option value="">選択してください</option>
+                        <option value="1" {{ old('lecture.understanding') == '1' ? 'selected' : '' }}>1: 理解していない</option>
+                        <option value="2" {{ old('lecture.understanding') == '2' ? 'selected' : '' }}>2: あまり理解していない</option>
+                        <option value="3" {{ old('lecture.understanding') == '3' ? 'selected' : '' }}>3: ほどほどに理解している</option>
+                        <option value="4" {{ old('lecture.understanding') == '4' ? 'selected' : '' }}>4: ある程度理解した</option>
+                        <option value="5" {{ old('lecture.understanding') == '5' ? 'selected' : '' }}>5: 完璧</option>
+                    </select>
+                </div>
+
                 <div class='body'>
                     <h4>Note</h4>
                     <textarea name="lecture[body]" placeholder="What did you do?">{{ old('lecture.body') }}</textarea>
@@ -90,6 +102,8 @@
                 <div class="register">
                     <input type="submit" value="登録">
                 </div>
+           
+
             </form>
             
             <div class="back">

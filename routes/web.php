@@ -5,16 +5,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\LectureController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
 
 // Breezeによって追加されたルート
 
@@ -36,12 +27,16 @@ Route::get('/lectures/{lecture}/lecture_edit', [LectureController::class,'edit']
 Route::put('/lectures/{lecture}', [LectureController::class, 'update'])->name('update');
 Route::delete('/lecture_delete/{lecture}', [LectureController::class,'delete']);
 
+
+
 // 科目関連
 Route::get('/', [SubjectController::class,'index'])->name('index');
 Route::get('/subject_register', [SubjectController::class, 'subject_register'])->name('subject_register');
 Route::post('/subject_store', [SubjectController::class, 'subject_store'])->name('subject_store');
-Route::get('/lectures/{subject}', [SubjectController::class, 'subject_detail'])->name('subject_detail');
+Route::get('/subjects/{subject}', [SubjectController::class, 'subject_detail'])->name('subject_detail');
 Route::delete('/subject_delete/{subject}', [SubjectController::class,'subject_delete']);
 
+Route::get('/lectures/{lecture}',[LectureController::class,'show'])->name('lecture_show');
+Route::post('/lectures/{lecture}/understanding', [LectureController::class,'Lv_update'])->name('Lv_update');
 // Breezeの認証ルート
 require __DIR__.'/auth.php';

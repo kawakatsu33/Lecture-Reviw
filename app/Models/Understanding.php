@@ -6,18 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Lecture extends Model
+class Understanding extends Model
 {
     use HasFactory;
     use SoftDeletes;
     
     protected $fillable = [
-        'name',
-        'body',
-        'times',
+        'lecture_id',
         'user_id',
-        'subject_id',
-        'pdf_path',
         'level'];
     
     public function user()
@@ -25,18 +21,12 @@ class Lecture extends Model
         return $this->belongsTo(User::class);
     }
     
-    public function subject()
+    public function lecture()
     {
-        return $this->belongsTo(Subject::class);
+        return $this->belongsTo(Lecture::class);
     }
     
-    public function weeks()
-    {
-        return $this->belongsToMany(Week::class, 'lecture_week');
-    }
+
     
-    public function understanding()
-    {
-        return $this->hasOne(Understanding::class);
-    }
+    
 }
