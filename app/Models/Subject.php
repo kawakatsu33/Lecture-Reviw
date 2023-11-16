@@ -16,6 +16,16 @@ class Subject extends Model
         'period',
         'user_id',
         'body'];
+        
+    protected static function boot()
+        {
+            parent::boot();
+        
+            static::deleting(function($subject) {
+                $subject->lectures()->delete();
+            });
+        }
+
     
     public function user()
     {

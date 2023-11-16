@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('understandings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lecture_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('lecture_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->unsignedTinyInteger('level');
             $table->timestamps();

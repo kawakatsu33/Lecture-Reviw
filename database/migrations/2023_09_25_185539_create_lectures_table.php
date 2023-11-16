@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->text('body');
-            $table->string('pdf_path')->nullable();     
+            $table->string('pdf_path')->nullable(); 
+            $table->text('pdf_paths')->nullable();
             $table->integer('times');
             $table->foreignId('user_id')->nullable()->constrained();
 
-            $table->foreignId('subject_id')->nullable()->constrained();
+            $table->foreignId('subject_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

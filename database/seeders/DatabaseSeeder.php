@@ -13,10 +13,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            SubjectsTableSeeder::class,
+            // SubjectsTableSeeder::class,
             WeeksTableSeeder::class,
-            SubjectWeekTableSeeder::class,
-            LecturesTableSeeder::class,
-            LectureWeekTableSeeder::class]);
+            // SubjectWeekTableSeeder::class,
+            //LecturesTableSeeder::class,
+            //LectureWeekTableSeeder::class
+            ]);
     }
 }

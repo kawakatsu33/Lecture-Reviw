@@ -1,14 +1,18 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h1>({{ $lecture->times }}回目) {{ $lecture->name }}      / {{ $subject->name }}</h1>
+    <x-slot name="header" style="background-color:#F5A9A9;">
+        <h1>⚠️要復習講義</h1>
     </x-slot>
     
     <x-slot name="content">
-   
     
+    @forelse($alertLectures as $lecture)
         <section>
             
-            
+            <h2>
+                <a href="{{ route('lecture_show', $lecture->id) }}">
+                    {{ $lecture->times }}回目. {{ $lecture->name }}
+                </a>
+            </h2>
             <div class="understanding">
                 <!--@if($lecture->understanding)-->
                 <!--  <p>理解度: {{ $lecture->understanding->level }}</p>-->
@@ -19,7 +23,7 @@
                 <!--@endif-->
                 <form action="{{ route('Lv_update', $lecture->id) }}" method="POST">
                     @csrf
-                <label for="level" class='understand'>理解度: </label>
+                <label for="level" class='understand'>理解度:</label>
                     <select name="level" id="level">
                         @for($i = 1; $i <= 5; $i++)
                             <option value="{{ $i }}" {{ $understandingLevel == $i ? 'selected' : '' }}>{{ $i }}</option>
@@ -29,15 +33,11 @@
                 </form>
             </div>
         <div class="container">
-            @if(!is_null($lecture->pdf_paths))
+            @if($lecture->pdf_path)
                 <div class="pdf-display">
-                    
-                @foreach(json_decode($lecture->pdf_paths, true) as $pdf_path)
-                    <iframe src="{{ secure_asset('storage/' . $pdf_path) }}" width="600" height="900" frameborder="0" style="border:none;"></iframe>
-                @endforeach
+                    <iframe src="{{ secure_asset('storage/' . $lecture->pdf_path) }}" width="600" height="900" frameborder="0" style="border:none;"></iframe>
                 </div>
             @endif
-        
 
                 <div class="body">
                         <p>{!! nl2br(e($lecture->body)) !!}</p>
@@ -53,7 +53,10 @@
                 </form>
             </div>
         </section>
+   @empty
+     <p>要注意講義はありません。</p>
     
+    @endforelse
 
     <div class='back'>
         <a href="{{ route('index') }}">トップに戻る</a>
@@ -70,13 +73,9 @@
     </script>
 
     <style>
-         @font-face {
-                font-family: 'Noto Serif JP';
-                src: url('/Users/kawakatsuryouta/Downloads/Noto_Serif_JP/NotoSerifJP-Regular.otf') format('opentype');
-                font-weight: normal;
-                font-style: normal;
-            }
     
+        
+        
         section {
             border-bottom: 2px solid #ccc;
             padding: 20px 0;
@@ -92,8 +91,7 @@
                 font-size: 0.95em; /* テキストのサイズを調整 */
                 font-weight: bold;
             }
-       
-         .reload{
+        .reload{
             border: 1px solid #000000;
             padding: 6px 15px;
             border-radius: 15px;
@@ -111,6 +109,14 @@
             text-align: right;
             background-color:#f5f5f5;
         }
+        
+        .add {
+            font-size: 1.5em;
+            text-align: center;
+            margin: 50px 0px 20px 600px;
+            
+        }
+
         .delete {
             text-align: right;
             margin-right:30px;
@@ -123,19 +129,24 @@
             background-color:#f5f5f5;
         }
 
-
         .body {
-            flex: 1;
+            flex: 1; /* 残りのスペースを使って伸縮 */
             margin-left: 20px;
         }
-         h1 {
-            font-size: 2.2em;  
+        h1 {
             font-family: 'Noto Serif JP', serif;
+            font-size: 3em;  /* 文字サイズを大きくする */
+            text-align:center; /* 中央揃えにする */
+            margin-top: 20px;  /* 上部に余白を追加 */
              }
         h2 {
             background-color: #ffe6eb;
             display: block;
-            padding: 5px;
+            padding: 13px;
+            font-size: 1.3em;
+            color:#0B0B61
+            font-weight:bold;
+	        border-left: 10px solid #ff0033;
         }
         
         .container {
@@ -149,15 +160,12 @@
         flex: 0 0 600px; /* この場合、幅600pxと固定 */
         margin-right: 20px; /* PDFとBodyの間の余白 */
     }
-        .body{
-            background-color:#ffffff;
-        }
-        
-        .back{
+    .back{
                 text-align: right;
                 margin-right: 150px;
                 margin-top: 60px;
                 text-decoration:underline;
+                
            }
     </style>
     </x-slot>

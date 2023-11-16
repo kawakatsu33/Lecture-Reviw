@@ -18,7 +18,18 @@ class Lecture extends Model
         'user_id',
         'subject_id',
         'pdf_path',
-        'level'];
+        'pdf_paths',
+        'level']
+        ;
+    protected static function boot()
+        {
+            parent::boot();
+        
+            static::deleting(function($lecture) {
+                $lecture->understanding()->delete();
+            });
+        }
+
     
     public function user()
     {
