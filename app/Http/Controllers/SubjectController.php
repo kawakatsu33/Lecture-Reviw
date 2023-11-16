@@ -7,24 +7,41 @@ use App\Models\Week;
 use App\Models\Subject; 
 use App\Models\Lecture;
 use app\Models\Understanding;
+use Illuminate\Support\Facades\Auth;
 
 class SubjectController extends Controller
 {
     public function index()
     {
-        $low_level = Lecture::whereHas('understanding', function ($query) {
+        $user = Auth::user();
+            if (!$user) {
+                // ユーザーが認証されていない場合の処理
+                return redirect()->route('login');
+            }
+        
+        $low_level = Auth::user()->lectures()->whereHas('understanding', function ($query) {
             $query->whereIn('level', [1, 2]);
-        })->get();
+        })->orderBy('created_at', 'desc')->get();
         $weeks = Week::with('subjects')->get();
         $dayNames = ["Monday" => "月曜", "Tuesday" => "火曜", "Wednesday" => "水曜", "Thursday" => "木曜", "Friday" => "金曜"];
         $todayEnglish = date('l'); 
         $todayJapanese = $dayNames[$todayEnglish]?? null;
-        return view('lectures.index', ['weeks' => $weeks, 'today' => $todayJapanese, 'low_level'=> $low_level]);
+        $new_lectures = Auth::user()->lectures()->latest()->take(20)->get();
+       
+        return view('lectures.index', [
+            'weeks' => $weeks,
+            'today' => $todayJapanese,
+            'low_level'=> $low_level,
+            'new_lectures' => $new_lectures,
+
+        ]);
+        
+        
     }
     
     public function subject_detail($subject_id)
     {   
-        $subject = Subject::with('lectures', 'lectures.understanding')->findOrFail($subject_id);
+        $subject = Auth::user()->subjects()->with('lectures', 'lectures.understanding')->findOrFail($subject_id);
         return view('lectures.subject_detail',compact('subject'));
     }
     
@@ -35,6 +52,7 @@ class SubjectController extends Controller
     
     public function subject_store(Request $request){
         $input = $request['subject'];
+        $input['user_id'] = Auth::id();
         $week_id = $request['week_id'];
     
         $subject = Subject::create($input);
@@ -46,8 +64,17 @@ class SubjectController extends Controller
     }
     
     public function subject_delete(Subject $subject){
+            // 現在のユーザーの科目の中から指定されたIDの科目を取得
+        $subject = Auth::user()->subjects()->find($subject_id);
+    
+        // 科目が見つかった場合のみ削除
+        if ($subject) {
             $subject->delete();
-            return redirect()->route('index');
+            return redirect()->route('index')->with('success', '科目が正常に削除されました。');
+        } else {
+            // 科目が見つからない場合、エラーメッセージを表示
+            return redirect()->route('index')->with('error', '指定された科目は存在しないか、削除する権限がありません。');
+        }
     }
     
 

@@ -9,9 +9,8 @@ use Illuminate\Support\Facades\Route;
 
 // Breezeによって追加されたルート
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [LectureController::class, 'showMyPage']
+)->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -26,6 +25,8 @@ Route::post('/lectures/store', [LectureController::class, 'lecture_store'])->nam
 Route::get('/lectures/{lecture}/lecture_edit', [LectureController::class,'edit'])->name('lecture_edit');
 Route::put('/lectures/{lecture}', [LectureController::class, 'update'])->name('update');
 Route::delete('/lecture_delete/{lecture}', [LectureController::class,'delete']);
+Route::get('/alert-lectures', [LectureController::class, 'alert_lectures'])->name('alert_lectures');
+
 
 
 
