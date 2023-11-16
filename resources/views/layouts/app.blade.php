@@ -13,6 +13,45 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+                main {
+                    background-color: #fcfcfc;
+                }
+                
+                header.bg-white.shadow {
+                    background-color:#fff0f9;
+                    background-image: url('/Users/kawakatsuryouta/Downloads/桜ヘッダー.jpg');
+                    
+                    background-size: cover; /* 画像をカバーするように設定 */
+                    background-repeat: no-repeat; /* 画像の繰り返しを防止 */
+                    background-position: center; /* 画像を中央に配置 */
+                    height:125px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center; 
+                }
+                
+                /*header.bg-white.shadow h1 {*/
+                /*    margin-left: auto;*/
+                /*    margin-right: auto;*/
+                    /*width: fit-content; */
+                /*}*/
+                
+                /* ナビゲーションリンクのスタイル */
+    /*.nav-link-custom {*/
+        
+        color: ; /* 文字色 */
+        border: 1px solid black; /* 黒い枠 */
+    /*    padding:5px;*/
+        margin: 5px; /* 外側の余白 */
+        border-radius: ; /* 枠の角を丸くする */
+        
+    /*}*/
+    /*.nav-link-custom:hover {*/
+        background-color: darkred; /* ホバー時の背景色 */
+        color: white; /* ホバー時の文字色 */
+    /*}*/
+            </style>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -29,7 +68,7 @@
 
             <!-- Page Content -->
             <main>
-                {{ $content }}
+               {{  $content }}
             </main>
         </div>
     </body>

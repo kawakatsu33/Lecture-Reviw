@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Understanding extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    // use SoftDeletes;
     
     protected $fillable = [
         'lecture_id',
@@ -25,8 +25,5 @@ class Understanding extends Model
     {
         return $this->belongsTo(Lecture::class);
     }
-    
 
-    
-    
 }

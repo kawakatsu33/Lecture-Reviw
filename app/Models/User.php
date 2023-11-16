@@ -25,7 +25,7 @@ class User extends Authenticatable
      
      public function lectures()
      {
-         return $this->hasmMany(Lecture::class);
+         return $this->hasMany(Lecture::class);
      }
      
      public function weeks()
