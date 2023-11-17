@@ -63,7 +63,7 @@ class SubjectController extends Controller
         return redirect()->route('index');
     }
     
-    public function subject_delete(Subject $subject){
+    public function subject_delete($subject_id){
             // 現在のユーザーの科目の中から指定されたIDの科目を取得
         $subject = Auth::user()->subjects()->find($subject_id);
     
