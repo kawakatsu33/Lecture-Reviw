@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'LectureAttackEX') }}</title>
+        <title>講義アタックEX</title>
+        <meta name="description" content="講義アタックEXは、学生のための講義復習・管理アプリです。特に講義復習を効率的に行えます。">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
