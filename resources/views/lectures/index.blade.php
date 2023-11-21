@@ -155,6 +155,8 @@
                 font-weight:bold;
                         }
                         
+            
+                        
             .alert_list {
                 width: 80%;
                 margin-left: 20px;
@@ -254,6 +256,14 @@
             }
             
             .sub_new_lectures {
+                text-align: right;
+                
+                font-size: 0.7em;
+                font-weight: bold;
+                
+            }
+            
+            .subject_new_title{
                 text-align: right;
                 
                 font-size: 0.7em;
@@ -375,7 +385,9 @@
                             <div class="latest_items new_list_li">
                                 <a class="lecture_new_title" href="{{ route('lecture_show', $lecture->id) }}">{{ $lecture->name }}</a>
                                 <p class='lecture_body'>{{ \Illuminate\Support\Str::limit(($lecture->body),70, '......') }}</p>
-                                <p class="sub_new_lectures">{{ $lecture->created_at->format('m/j G時i分s秒') }}</p>
+                                
+                                <p class="sub_new_lectures" href ="{{ optional($lecture->subject)->id ? route('subject_detail', ['subject' => $lecture->subject->id]) : '#' }}">
+                                    {{ optional($lecture->subject)->name ?? '科目名不明' }} / {{ $lecture->created_at->format('m/j G時i分s秒') }}</p>
                                 
                             </div>
                         @empty

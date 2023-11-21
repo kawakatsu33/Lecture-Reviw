@@ -118,14 +118,15 @@
         }
 
         .delete {
-            text-align: right;
-            margin-right:30px;
+            text-align: center;
+            font-size: 0.9em;
+            
             border: 1px solid #000000;
-            padding: 5px 7px;
+            /*padding: 5px 7px;*/
             border-radius: 3px;
             margin-left:auto;
             margin-right:30px;
-            width:3.5%;
+            width:3%;
             background-color:#f5f5f5;
         }
 
