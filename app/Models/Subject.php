@@ -15,7 +15,8 @@ class Subject extends Model
         'name',
         'period',
         'user_id',
-        'body'];
+        'body',
+        'timetable_excluded'];
         
     protected static function boot()
         {

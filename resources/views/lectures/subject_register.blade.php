@@ -18,7 +18,7 @@
             font-family: 'Noto Serif JP', serif;
         }
         
-        h2, h3, h4 {
+        h2, h3, h4, h5 {
             margin-top: 18px;
             margin-left:10px;
             font-size: 20px;
@@ -31,7 +31,7 @@
             background-color: #b5b1b1;
         }
         
-        .week select, .period input, .name input {
+        .week select, .period input, .name input{
            
             
             width: 75%;       /* フィールドを親要素の幅いっぱいに広げる */
@@ -43,6 +43,7 @@
             border: 1px solid #848484;  /* フィールドの境界線をわかりやすくする */
             
         }
+        
         
          
         
@@ -64,41 +65,83 @@
                 text-decoration:underline;
             
         }
+        
+        /*.timetable_excluded label {*/
+        /*    font-size: 15px;*/
+        /*    margin-left: 30px;*/
+        /*    margin-top: 60px;*/
+            
+        /*}*/
+        
+        .timetable_excluded{
+            padding-top: 40px;
+            padding-left: 30px;
+            padding-bottom: 13px;
+        }
+        
+        .timetable_excluded label{
+            font-size: 18px;
+        }
+        
+        
         </style>
         
    
-           <form action="/subject_store" method="POST">
+        <form action="/subject_store" method="POST">
                @csrf
 
-                <div class="name">
-                    <h3>&nbsp; 科目名</h3>
-                    <input type="text" name='subject[name]' placeholder="科目名" value="{{ old('subject.name') }}">
-                </div>
+            <div class="timetable_excluded">
+                
+                <input type="checkbox" name="subject[timetable_excluded]" value="1">
+                <label for="timetable_excluded">この科目を時間割外として登録する</label>
+            </div>
+            
+            <div class="name">
+                <h3>&nbsp; 科目名</h3>
+                <input type="text" name='subject[name]' placeholder="科目名" value="{{ old('subject.name') }}">
+            </div>
 
-                <div class="week">
-                    <h2>&nbsp; 曜日</h2>
-                    <select name="week_id">
-                        @foreach($weeks as $week)
-                            <option value="{{ $week->id }}">{{ $week->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+            <div class="week">
+                <h2>&nbsp; 曜日</h2>
+                <select name="week_id">
+                    @foreach($weeks as $week)
+                        <option value="{{ $week->id }}">{{ $week->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+           
+            
+            <div class='period'>
+                <h4>&nbsp; 時限</h4>
+                <input type="number" name='subject[period]' placeholder="n" value="{{ old('subject.period') }}">
+            </div>
                 
-               
+            
                 
-                <div class='period'>
-                    <h4>&nbsp; 時限</h4>
-                    <input type="number" name='subject[period]' placeholder="n" value="{{ old('subject.period') }}">
-                </div>
-                
-                <div class="register">
-                    <input type="submit" value="登録">
-                </div>
-            </form>
+            <div class="register">
+                <input type="submit" value="登録">
+            </div>
+        </form>
         <div class="back">
                 <a href="{{ route('index') }}">トップに戻る</a>
-        
         </div>
-
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+        <script>
+            $(document).ready(function(){
+                $('input[name="subject[timetable_excluded]"]').change(function(){
+                if($(this).is(':checked')){
+                    $('.week').hide();
+                    $('.period').hide();
+                }else{
+                    $('.week').show();
+                    $('.period').show();
+                }
+                
+                });
+            });
+        </script>
     </x-slot>
 </x-app-layout>

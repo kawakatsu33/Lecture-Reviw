@@ -26,13 +26,32 @@
             .all_list {
                 display: flex;
                 justify-content: space-between;
-                padding: 20px;
+                padding: 30px;
                  
             }
             
-            .timetable_block{
-                width: 63%; 
+            .timetable_and_excludedSubjects_wrapper{
+                width: 63%;
+                display: flex;
+                flex-direction: column;
             }
+            
+            .timetable_block, .excludedSubjects_block{
+                width: 100%; 
+            }
+            
+            .excludedSubjects_block{
+                margin-top: 20px;
+            }
+            
+            .new-lectures-block {
+                /*flex-grow: 1;*/
+                width: 25%;  /* ブロックの幅を調整する */
+                
+                margin: 5px 30px 5px 10px;
+                align-self: flex-start;
+            }
+            
             .week-container {
                 display: flex;
                 flex-direction: row;
@@ -45,12 +64,7 @@
                 flex-wrap: nowrap; /* 横並びのままに保つための設定 */
                 
             }
-            .new-lectures-block {
-                /*flex-grow: 1;*/
-                width: 25%;  /* ブロックの幅を調整する */
-                
-                margin: 5px 30px 5px 10px;
-            }
+            
 
 
             section {
@@ -138,7 +152,7 @@
             }
             
             .lecture_title {
-                color: #0844DD; /* Bootstrap default link color */
+                color: #C80303; /* Bootstrap default link color */
                 
                 font-size:1.2em;
                 padding-left:30px;
@@ -296,6 +310,31 @@
                 color:#1D0E81;
             }
             
+            .excludedSubjects_ul {
+                    list-style: none;
+                    margin-left: 40px;
+                    width: 95%;
+                }
+            .excludedSubjects_ul li:nth-child(odd) {
+                background-color: #FBEEF6; 
+            }
+            
+            .excludedSubjects_ul li:nth-child(even) {
+                background-color: #FDFBFC; 
+            }
+            
+            
+            .excludedSubject_title {
+                 font-size: 1em;
+                 padding:7px 0px 0px 30px;
+                 text-decoration: underline;
+             }
+             
+             .excludedSubjects_items{
+                 
+                 border-bottom:1px solid #ccc;
+             }
+             
             
         </style>
         
@@ -304,6 +343,7 @@
     
     
         <div class="alert_list">
+            
                 <h4>要復習リスト　(理解度1-2)</h4>
                     <div class="alert_list_items">
                         <span class="latest_items">最新5件</span>
@@ -323,7 +363,7 @@
                                         </a>
                                         , {{ $lecture->created_at->format('m/j') }}
                                         , {{ $lecture->created_at->format('l') }}
-                                        , {{ $lecture->subject->period ?? '未定義' }}限
+                                        , {{ $lecture->subject->period ?? '(未定義)' }}限
                                     </div>
                                 </li>
                             @empty
@@ -331,52 +371,91 @@
                                 <li>よく頑張っています</li>
                             @endforelse
                          </ul>
-                   
                     <a class="full_alert_link" href="{{ route('alert_lectures') }}">» 要復習講義一覧</a>
                </div>
         </div> 
+    
+        
+        
     <div class="all_list"> 
-    <div class="timetable_block">
-        <h5>時間割表</h5>
-               <div class="week-container">             
-                @foreach ($weeks as $week)
-                    <section @if($today == $week->name) class="today" @endif>
-                        <h2>{{ $week->name }}</h2>
-                        @for($period = 1; $period <= 7; $period++)
-                                @php
-                                    $subjectForPeriod = $week->subjects->firstWhere('period', $period);
-                                @endphp
-                                <div class="subject-container">
-        
-                                <p>{{ $period }}限</p>
-        
+        <div class="timetable_and_excludedSubjects_wrapper">
+            
+        <div class="timetable_block">
+                <h5>時間割表</h5>
+                    <div class="add">
+                            <a href="{{ route('subject_register') }}" style="background-color: #FFF0F5; color: #000000; padding: 10px 15px; border-radius: 4px; text-decoration: none; border: 1px solid black;">
+                                科目追加
+                            </a>
+                    </div>
+                   <div class="week-container">             
+                        @foreach ($weeks as $week)
+                            <section @if($today == $week->name) class="today" @endif>
+                                <h2>{{ $week->name }}</h2>
+                                @for($period = 1; $period <= 7; $period++)
+                                        @php
+                                            $subjectForPeriod = $week->subjects->firstWhere('period', $period);
+                                        @endphp
+                                        <div class="subject-container">
+                
+                                        <p>{{ $period }}限</p>
+                
+                                        
+                                        @if($subjectForPeriod)
+                                       <a href="{{ route('subject_detail', $subjectForPeriod->id) }}"><h3 class='title'>{{ $subjectForPeriod->name }}</h3></a>
+                                        
+                                        <div class="delete">
+                                            <form action="/subject_delete/{{ $subjectForPeriod->id }}" id="form_{{ $subjectForPeriod->id }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" onclick="deleteSubject({{ $subjectForPeriod->id }})">科目削除</button> 
+                                            </form>
                                 
-                                @if($subjectForPeriod)
-                               <a href="{{ route('subject_detail', $subjectForPeriod->id) }}"><h3 class='title'>{{ $subjectForPeriod->name }}</h3></a>
-                                
+                                        </div>
+                                        @else
+                                            <p></p>
+                                        @endif
+                                    </div>    
+                                @endfor
+                            </section>
+                        @endforeach
+                    </div>
+                        
+            </div>
+            
+            <h5>時間割外科目</h5>
+            <div class="add">
+                            <a href="{{ route('subject_register') }}" style="background-color: #FFF0F5; color: #000000; padding: 10px 15px; border-radius: 4px; text-decoration: none; border: 1px solid black;">
+                                科目追加
+                            </a>
+                    </div>
+            <div class="excludedSubjects_block">
+                    <ul class="excludedSubjects_ul">
+                        @forelse ($excludedSubjects as $excludedSubject)
+                            <li class="excludedSubjects_items">
+                                <a href="{{ route('subject_detail', ['subject' =>$excludedSubject->id]) }}">
+                                    <div class='excludedSubject_title'>
+                                        {{ $excludedSubject->name }}
+                                    </div>
+                                </a>
                                 <div class="delete">
-                                    <form action="/subject_delete/{{ $subjectForPeriod->id }}" id="form_{{ $subjectForPeriod->id }}" method="post">
+                                    <form action="/subject_delete/{{ $excludedSubject->id }}" id="form_{{ $excludedSubject->id }}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" onclick="deleteSubject({{ $subjectForPeriod->id }})">科目削除</button> 
+                                        <button type="button" onclick="deleteSubject({{ $excludedSubject->id }})">科目削除</button>
                                     </form>
                         
                                 </div>
-                                @else
-                                    <p></p>
-                                @endif
-                            </div>    
-                        @endfor
-                    </section>
-                @endforeach
-                </div>
-                <div class="add">
-                <a href="{{ route('subject_register') }}" style="background-color: #FFF0F5; color: #000000; padding: 10px 15px; border-radius: 4px; text-decoration: none; border: 1px solid black;">
-                    科目追加
-                </a>
-        </div>
-    </div>
-       
+                            </li>
+                        @empty
+                            <li>時間割外科目はありません</li>
+                        @endforelse
+                    </ul>
+            </div>
+            
+            
+            
+            </div>
+        
     
     <div class="new-lectures-block">
                     <h6>新着講義</h6>
@@ -386,19 +465,21 @@
                                 <a class="lecture_new_title" href="{{ route('lecture_show', $lecture->id) }}">{{ $lecture->name }}</a>
                                 <p class='lecture_body'>{{ \Illuminate\Support\Str::limit(($lecture->body),70, '......') }}</p>
                                 
-                                <p class="sub_new_lectures" href ="{{ optional($lecture->subject)->id ? route('subject_detail', ['subject' => $lecture->subject->id]) : '#' }}">
-                                    {{ optional($lecture->subject)->name ?? '科目名不明' }} / {{ $lecture->created_at->format('m/j G時i分s秒') }}</p>
+                                <p class="sub_new_lectures">
+                                    <a href="{{ route('subject_detail', ['subject' => $lecture->subject->id]) }}">{{ $lecture->subject->name }}</a>
+                                    / {{ $lecture->created_at->format('m/j G時i分s秒') }}
+                                </p>
                                 
                             </div>
                         @empty
                             <p class="lecture_new_title">講義情報がありません！！</p>
-                            <p class='lecture_body'>時間割表に科目を追加し、講義を登録してください。</p>
+                            <p class='lecture_body'>科目を追加し、講義を登録してください。</p>
                         @endforelse
                     </div>
     </div>
-    
+    </div>
             
-</div>   
+
      
     <script>
             function deleteSubject(id) {

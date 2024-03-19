@@ -1,11 +1,18 @@
 <x-guest-layout>
+    <x-slot name="header">
+       <h1>講義アタックEX</h1>
+     </x-slot>
     <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <div class="flex-center">
+        <div class="form-container">
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
         <!-- Email Address -->
+        <div class="login-form">
+            ログインフォーム
+        </div>
         <div>
             <x-input-label for="email" :value="__('メールアドレス')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
@@ -51,4 +58,38 @@
         <a  class="underline text-align:right text-gray-600 hover:text-gray-900" href="{{ route('register') }}">
             {{ __('新規登録') }}</a>
     </form>
+    </div>
+    </div>
+    
+    <style>
+        h1{
+            font-family: 'Noto Serif JP', serif;
+            font-size: 3em;  /* 文字サイズを大きくする */
+            text-align:center; /* 中央揃えにする */
+            margin-top: 20px; 
+        }
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 700px;
+            margin: auto; /* 中央揃え */
+            padding: 20px; /* 内側の余白を追加 */
+        }
+        
+        .login-form{
+            
+        }
+    </style>
+    
 </x-guest-layout>

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>講義アタックEX</title>
+
         <meta name="description" content="講義アタックEXは、学生のための講義復習・管理アプリです。特に講義復習を効率的に行えます。">
 
         <!-- Fonts -->
@@ -31,27 +31,7 @@
                     align-items: center;
                     justify-content: center; 
                 }
-                
-                /*header.bg-white.shadow h1 {*/
-                /*    margin-left: auto;*/
-                /*    margin-right: auto;*/
-                    /*width: fit-content; */
-                /*}*/
-                
-                /* ナビゲーションリンクのスタイル */
-    /*.nav-link-custom {*/
-        
-        color: ; /* 文字色 */
-        border: 1px solid black; /* 黒い枠 */
-    /*    padding:5px;*/
-        margin: 5px; /* 外側の余白 */
-        border-radius: ; /* 枠の角を丸くする */
-        
-    /*}*/
-    /*.nav-link-custom:hover {*/
-        background-color: darkred; /* ホバー時の背景色 */
-        color: white; /* ホバー時の文字色 */
-    /*}*/
+         
             </style>
     </head>
     <body class="font-sans antialiased">

@@ -12,7 +12,6 @@ class LectureController extends Controller
 {
     public function lecture_store(Request $request, Lecture $lecture)
     {
-        // dd($request->all());
         $request->validate([
             'level' => 'required|integer|min:1|max:5',
         ]);

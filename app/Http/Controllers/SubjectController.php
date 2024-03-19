@@ -27,12 +27,13 @@ class SubjectController extends Controller
         $todayEnglish = date('l'); 
         $todayJapanese = $dayNames[$todayEnglish]?? null;
         $new_lectures = Auth::user()->lectures()->latest()->take(20)->get();
-       
+        $excludedSubjects = Subject::where('timetable_excluded',1)->get();
         return view('lectures.index', [
             'weeks' => $weeks,
             'today' => $todayJapanese,
             'low_level'=> $low_level,
             'new_lectures' => $new_lectures,
+            'excludedSubjects' => $excludedSubjects
 
         ]);
         
@@ -51,14 +52,25 @@ class SubjectController extends Controller
     }
     
     public function subject_store(Request $request){
-        $input = $request['subject'];
-        $input['user_id'] = Auth::id();
-        $week_id = $request['week_id'];
-    
-        $subject = Subject::create($input);
-    
-        $week = Week::find($week_id);
-        $week->subjects()->attach($subject->id);
+        $user_id = Auth::id();
+        $name = $request->input('subject.name');
+        $period = $request->input('subject.period');
+        $week_id = $request->input('week_id');
+        $timetable_excluded = $request->input('subject.timetable_excluded', 0);//チェックされていないデフォルトでは0
+        
+        $subject = Subject::create([
+            'user_id' => $user_id,
+            'name' => $name,
+            'period' => $period,
+            'timetable_excluded' => $timetable_excluded
+        ]);
+        
+        if($week_id){
+            $week = Week::find($week_id);
+            if($week){
+                $week->subjects()->attach($subject->id);
+            }
+        }
         
         return redirect()->route('index');
     }

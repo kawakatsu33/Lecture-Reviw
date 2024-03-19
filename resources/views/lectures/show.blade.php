@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h1>({{ $lecture->times }}回目) {{ $lecture->name }}      / {{ $subject->name }}</h1>
+        <h1>({{ $lecture->times }}回目) {{ $lecture->name }}      / <a class="subject_title" href="{{ route("subject_detail", ['subject'=>$subject->id]) }}" >{{ $subject->name }}</a></h1>
     </x-slot>
     
     <x-slot name="content">
@@ -76,7 +76,7 @@
                 font-weight: normal;
                 font-style: normal;
             }
-    
+        
         section {
             border-bottom: 2px solid #ccc;
             padding: 20px 0;
@@ -92,7 +92,10 @@
                 font-size: 0.95em; /* テキストのサイズを調整 */
                 font-weight: bold;
             }
-       
+        
+        .subject_title{
+            text-decoration: underline;
+        }
          .reload{
             border: 1px solid #000000;
             padding: 6px 15px;

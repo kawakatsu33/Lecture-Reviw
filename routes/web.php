@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-// Breezeによって追加されたルート
+
 
 Route::get('/dashboard', [LectureController::class, 'showMyPage']
 )->middleware(['auth', 'verified'])->name('dashboard');
@@ -18,7 +18,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// もともとのルート
 //講義関連
 Route::get('/lectures/lecture_register/{subject_id}', [LectureController::class, 'lecture_register'])->name('lecture_register');
 Route::post('/lectures/store', [LectureController::class, 'lecture_store'])->name('lecture_store');
@@ -39,5 +38,7 @@ Route::delete('/subject_delete/{subject}', [SubjectController::class,'subject_de
 
 Route::get('/lectures/{lecture}',[LectureController::class,'show'])->name('lecture_show');
 Route::post('/lectures/{lecture}/understanding', [LectureController::class,'Lv_update'])->name('Lv_update');
+
+
 // Breezeの認証ルート
 require __DIR__.'/auth.php';
